@@ -7,11 +7,11 @@ const configViewEngine = require("./config/viewEngine");
 
 const app = express();
 const port = 8080;
-
+const hostname = "localhost";
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-configViewEngine(); //configViewEngine
+configViewEngine(app); //configViewEngine
 //config json api
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +21,10 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 //used router
 app.get("/", (req, res) => {
   res.send("Hello World!");
+});
+
+app.get("/home", (req, res) => {
+  res.render("home.ejs");
 });
 
 app.listen(port, () => {
