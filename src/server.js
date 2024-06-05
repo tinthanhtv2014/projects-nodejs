@@ -6,25 +6,28 @@ const bodyParser = require("body-parser");
 const configViewEngine = require("./config/viewEngine");
 
 const app = express();
-const port = 8080;
+const port = 8081;
 const hostname = "localhost";
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 configViewEngine(app); //configViewEngine
+
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+
 //config json api
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //config static
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-//used router
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  return res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/home", (req, res) => {
-  res.render("home.ejs");
+io.on("connection", (socket) => {
+  console.log("connection");
 });
 
 app.listen(port, () => {
