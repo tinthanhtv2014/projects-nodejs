@@ -6,16 +6,14 @@
     <title>Document</title>
   </head>
   <body>
-    hello world with html
-
-    <ul id="messages"></ul>
-    <form id=chat-form"">
-      <input type="text" id="chat-mes">
-      <button id="send-chat">gửi</button>
+    <form action="/createUser" method="post">
+      <input type="text" name="email" />
+      <input type="text" name="phone" />
+      <button type="submit">send</button>
     </form>
+    <% for(var i= 0; i< users.length; i++) { %>
+    <h2><%= users[i].email %></h2>
+    <h3><%= users[i].username %></h3>
+    <% } %>
   </body>
-  <script src="/socket.io/socket.io.js"></script>\
-  <script>
-    const socket = io();
-  </script>
 </html>
